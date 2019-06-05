@@ -343,7 +343,9 @@ export default class EachBlockWrapper extends Wrapper {
 		const dynamic = this.block.has_update_method;
 
 		const destroy = this.node.has_animation
-			? `@fix_and_outro_and_destroy_block`
+			? (this.block.has_outros
+				? `@fix_and_outro_and_destroy_block`
+				: `@fix_and_destroy_block`)
 			: this.block.has_outros
 				? `@outro_and_destroy_block`
 				: `@destroy_block`;
@@ -508,7 +510,7 @@ export default class EachBlockWrapper extends Wrapper {
 		if (outro_block) {
 			block.builders.outro.add_block(deindent`
 				${iterations} = ${iterations}.filter(Boolean);
-				for (let #i = 0; #i < ${view_length}; #i += 1) ${outro_block}(#i, 0);`
+				for (let #i = 0; #i < ${view_length}; #i += 1) ${outro_block}(#i, 0, 0);`
 			);
 		}
 
